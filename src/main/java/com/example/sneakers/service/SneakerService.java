@@ -48,6 +48,7 @@ public class SneakerService {
     sneaker.setName(sneakerRequest.getName());
     sneaker.setBrand(sneakerRequest.getBrand());
     sneaker.setReleaseYear(sneakerRequest.getReleaseYear());
+    sneakerRepo.save(sneaker);
     return sneaker;
   }
 }

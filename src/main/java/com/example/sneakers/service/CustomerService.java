@@ -41,6 +41,7 @@ public class CustomerService {
     customer.setSurname(customerRequest.getSurname());
     customer.setUsername(customerRequest.getUsername());
     customer.setPassword(customerRequest.getPassword());
+    customerRepo.save(customer);
     return customer;
   }
 }
