@@ -1,14 +1,8 @@
 package com.example.sneakers.entity;
 
 import com.example.sneakers.enums.Brand;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
 import org.springframework.stereotype.Service;
 
 import java.awt.*;
@@ -18,6 +12,8 @@ import java.awt.*;
 @Setter
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
+@Table(name = "sneaker")
 public class Sneaker {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,4 +21,10 @@ public class Sneaker {
   Brand brand;
   String name;
   int releaseYear;
+  /*
+  @JoinColumn(name = "customer")
+  Customer customer;
+  */
+
+
 }

@@ -1,5 +1,6 @@
 package com.example.sneakers.service;
 
+import com.example.sneakers.entity.Customer;
 import com.example.sneakers.entity.Sneaker;
 import com.example.sneakers.enums.Brand;
 import com.example.sneakers.exceptions.GenericException;
@@ -22,7 +23,8 @@ public class SneakerService {
   }
 
   public Sneaker getById(long id) {
-    return sneakerRepo.findById(id).orElseThrow(() -> new GenericException(HttpStatus.NOT_FOUND, "sneaker not found", 404));
+    return sneakerRepo.findById(id).
+            orElseThrow(() -> new GenericException(HttpStatus.NOT_FOUND, "sneaker not found", 404));
   }
 
   public Sneaker createSneaker(SneakerRequest sneakerRequest) {
@@ -39,4 +41,13 @@ public class SneakerService {
     return sneakerRepo.findSneakersByBrand(brand).orElseThrow(() -> new GenericException(HttpStatus.NOT_FOUND, "Brand name is false choose one of the possible ones", 404));
   }
 
+  public Sneaker updateSneakerByID(long id, SneakerRequest sneakerRequest) {
+    Sneaker sneaker = sneakerRepo.findById(id)
+            .orElseThrow(() -> new GenericException(HttpStatus.NOT_FOUND, "sneaker not found", 404));
+
+    sneaker.setName(sneakerRequest.getName());
+    sneaker.setBrand(sneakerRequest.getBrand());
+    sneaker.setReleaseYear(sneakerRequest.getReleaseYear());
+    return sneaker;
+  }
 }
