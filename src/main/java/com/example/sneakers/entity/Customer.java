@@ -1,17 +1,17 @@
 package com.example.sneakers.entity;
 
-import com.example.sneakers.enums.Brand;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
 @Setter
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "customer")
 public class Customer {
   @Id
@@ -21,13 +21,21 @@ public class Customer {
   String surname;
   String username;
   String password;
-  /*
-  @OneToMany(
-          mappedBy = "customer",
-          cascade = CascadeType.ALL,
-          orphanRemoval = true
-  )
-  Sneaker sneaker;
-   */
 
+  @ManyToMany(fetch = FetchType.EAGER,
+          cascade = {
+          CascadeType.PERSIST,
+                  CascadeType.MERGE,
+                  CascadeType.REMOVE
+  })
+  @JoinTable(
+          name = "customer_sneakers",
+          joinColumns = {
+                  @JoinColumn(name = "customer-id", referencedColumnName = "customerId")
+          },
+          inverseJoinColumns = {
+                  @JoinColumn(name = "sneaker-id", referencedColumnName = "sneakerId")
+          }
+  )
+  Set<Sneaker> sneakers = new HashSet<>();
 }

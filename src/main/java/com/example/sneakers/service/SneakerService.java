@@ -51,4 +51,12 @@ public class SneakerService {
     sneakerRepo.save(sneaker);
     return sneaker;
   }
+
+  public void deleteAllSneakers() {
+    sneakerRepo.deleteAll();
+  }
+
+  public void deleteSneakerById(long id) {
+    sneakerRepo.deleteById(id);
+  }
 }

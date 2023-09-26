@@ -1,11 +1,15 @@
 package com.example.sneakers.entity;
 
 import com.example.sneakers.enums.Brand;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.stereotype.Service;
 
 import java.awt.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -21,10 +25,13 @@ public class Sneaker {
   Brand brand;
   String name;
   int releaseYear;
-  /*
-  @JoinColumn(name = "customer")
-  Customer customer;
-  */
 
-
+  @JsonIgnore
+  @ManyToMany(fetch = FetchType.EAGER,
+          cascade = {
+                  CascadeType.PERSIST,
+                  CascadeType.MERGE,
+                  CascadeType.REMOVE
+          }, mappedBy = "sneakers")
+  Set<Customer> customers = new HashSet<>();
 }
