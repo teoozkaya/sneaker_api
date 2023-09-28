@@ -23,13 +23,15 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class SecurityConfig {
 
-  @Autowired
-  @Lazy
-  private JwtFilter jwtFilter;
-  @Autowired
-  private JwtAccessDeniedHandler accessDeniedHandler;
-  @Autowired
-  private JwtAuthenticationEntryPoint authenticationEntryPoint;
+  private final JwtFilter jwtFilter;
+  private final JwtAccessDeniedHandler accessDeniedHandler;
+  private final JwtAuthenticationEntryPoint authenticationEntryPoint;
+
+  public SecurityConfig(@Lazy JwtFilter jwtFilter, JwtAccessDeniedHandler accessDeniedHandler, JwtAuthenticationEntryPoint authenticationEntryPoint) {
+    this.jwtFilter = jwtFilter;
+    this.accessDeniedHandler = accessDeniedHandler;
+    this.authenticationEntryPoint = authenticationEntryPoint;
+  }
 
   @Bean
   public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
@@ -49,11 +51,23 @@ public class SecurityConfig {
             .and()
             .authorizeHttpRequests(auth -> auth
                     //.requestMatchers("/api/users").hasAnyAuthority("ROLE_SPECTATOR", "ROLE_ADMIN")
-                    .requestMatchers("/api/customers").permitAll()
-                    .requestMatchers("/api/sneakers").permitAll()
-                    .requestMatchers("/api/users").permitAll()
+                    .requestMatchers("/api/auth/login",
+                            "/api/sneakers",
+                            "/api/sneakers/brand",
+                            "/api/customers/create").permitAll()
                     .anyRequest().authenticated()
-            )
+            )/*
+            .authorizeHttpRequests(auth -> auth
+                    .requestMatchers("/api/users").hasAnyAuthority("ROLE_CUSTOMER_OWNER", "ROLE_ADMIN")
+                    .requestMatchers("/api/auth/login",
+                            "/api/auth/**",
+                            "/v3/api-docs.yaml",
+                            "/v3/api-docs/**",
+                            "/swagger-ui/**",
+                            "/swagger-ui.html"
+                    ).permitAll()
+                    .anyRequest().authenticated()
+                    */
             .formLogin(AbstractHttpConfigurer::disable)
             .httpBasic(AbstractHttpConfigurer::disable)
             .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

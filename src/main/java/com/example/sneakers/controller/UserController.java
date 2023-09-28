@@ -17,19 +17,24 @@ public class UserController {
   @Autowired
   UserService userService;
 
+  @PostMapping("/users")
+  public ResponseEntity<User> createUser(@RequestBody UserRequest userRequest) {
+    return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(userRequest));
+  }
+
   @GetMapping("/users")
   public ResponseEntity<List<User>> getAllUsers() {
     return ResponseEntity.status(HttpStatus.OK).body(userService.getAllUsers());
   }
 
   @GetMapping("/users/{id}")
-  public ResponseEntity<User> getUSerById(@PathVariable("id") long id) {
+  public ResponseEntity<User> getUserById(@PathVariable("id") long id) {
     return ResponseEntity.ok().body(userService.getUserById(id));
   }
 
-  @PostMapping("/users")
-  public ResponseEntity<User> createUser(@RequestBody UserRequest userRequest) {
-    return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(userRequest));
+  @GetMapping("/users/user/{username}")
+  public ResponseEntity<User> getUSerById(@PathVariable("username") String username) {
+    return ResponseEntity.ok().body(userService.getUserByUsername(username));
   }
 
   @DeleteMapping("/users")

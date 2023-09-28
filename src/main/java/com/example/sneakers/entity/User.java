@@ -10,18 +10,16 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "User")
+@Table(name = "users")
 public class User {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private int userId;
-  String name;
-  String surname;
-  String username;
-  String password;
-  Role role;
-  boolean isActive;
+  private String username;
+  private String password;
+  private Role role;
+  private boolean isActive;
 
 
 }

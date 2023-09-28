@@ -39,7 +39,7 @@ public class SneakerController {
     return ResponseEntity.status(HttpStatus.OK).body(sneakerService.getSneakersByBrand(brand));
   }
 
-   @PostMapping("/sneakers")
+   @PostMapping("/sneakers/create")
    public ResponseEntity<Sneaker> createSneaker(@RequestBody SneakerRequest sneakerRequest) {
      return ResponseEntity.status(HttpStatus.CREATED).body(sneakerService.createSneaker(sneakerRequest));
    }
@@ -49,13 +49,13 @@ public class SneakerController {
     return ResponseEntity.status(HttpStatus.OK).body(sneakerService.updateSneakerByID(id,sneakerRequest));
   }
 
-  @DeleteMapping("/sneakers")
+  @DeleteMapping("/sneakers/delete")
   public ResponseEntity<Object> deleteAll() {
     sneakerService.deleteAllSneakers();
      return ResponseEntity.ok().build();
   }
 
-  @DeleteMapping("/sneakers/{id}")
+  @DeleteMapping("/sneakers/delete/{id}")
   public ResponseEntity<Object> deleteSneakerById(@PathVariable("id") long id) {
     sneakerService.deleteSneakerById(id);
     return ResponseEntity.ok().build();

@@ -19,7 +19,6 @@ import java.util.Map;
 
 @Component
 public class JwtFilter extends OncePerRequestFilter {
-
   private final UserDetailsService userDetailsService;
   private final TokenUtils tokenUtils;
 
@@ -28,8 +27,10 @@ public class JwtFilter extends OncePerRequestFilter {
     this.userDetailsService = userDetailsService;
     this.tokenUtils = tokenUtils;
   }
+
   @Override
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+
     String token = getToken(request);
     String username;
     try {
@@ -41,7 +42,8 @@ public class JwtFilter extends OncePerRequestFilter {
         authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
       }
-    } catch (Exception e) {
+      filterChain.doFilter(request,response);
+    }catch (Exception e){
       response.setContentType("application/json");
       Map<String,String> errors= new HashMap<>();
       errors.put("error",e.getMessage());
@@ -51,7 +53,7 @@ public class JwtFilter extends OncePerRequestFilter {
     }
   }
 
-  private String getToken(HttpServletRequest httpServletRequest) {
+  public String getToken(HttpServletRequest httpServletRequest) {
     String header = httpServletRequest.getHeader(HttpHeaders.AUTHORIZATION);
     if (header == null || !header.startsWith("Bearer ")) {
       return "";

@@ -29,7 +29,7 @@ public class CustomerController {
     return ResponseEntity.status(HttpStatus.OK).body(customerService.getCustomerById(id));
   }
 
-  @PostMapping("customers")
+  @PostMapping("customers/create")
   public ResponseEntity<Customer> createCustomer(@RequestBody CustomerRequest customerRequest) {
     return ResponseEntity.status(HttpStatus.CREATED).body(customerService.createCustomer(customerRequest));
   }
