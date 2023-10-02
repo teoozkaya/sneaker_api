@@ -4,7 +4,6 @@ import com.example.sneakers.entity.Customer;
 import com.example.sneakers.entity.Sneaker;
 import com.example.sneakers.exceptions.GenericException;
 import com.example.sneakers.repository.CustomerRepo;
-import com.example.sneakers.repository.SneakerRepo;
 import com.example.sneakers.request.CustomerRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -52,23 +51,39 @@ public class CustomerService {
     return customer;
   }
 
-  public Customer addSneakerToCustomer(long customerId, long sneakerId) {
+  public Customer addSneakerToOwnedList(long customerId, long sneakerId) {
     Customer customer = customerRepo.findById(customerId)
             .orElseThrow(() -> new GenericException(HttpStatus.NOT_FOUND, "customer not found", 404));
 
     Sneaker sneaker = sneakerService.getById(sneakerId);
 
-    customer.getSneakers().add(sneaker);
+    customer.getOwnedSneakers().add(sneaker);
     customerRepo.save(customer);
     return customer;
   }
 
-  public Set<Sneaker> getSneakersOfCustomer(long id) {
+  public Set<Sneaker> getOwnedSneakersOfCustomer(long id) {
     Customer customer = customerRepo.findById(id).orElseThrow(() -> new GenericException(HttpStatus.NOT_FOUND, "customer not found", 404));
 
-    return customer.getSneakers();
+    return customer.getOwnedSneakers();
   }
 
+  public Customer addSneakerToWishList(long customerId, long sneakerId) {
+    Customer customer = customerRepo.findById(customerId)
+            .orElseThrow(() -> new GenericException(HttpStatus.NOT_FOUND, "customer not found", 404));
+
+    Sneaker sneaker = sneakerService.getById(sneakerId);
+
+    customer.getSneakerWishlist().add(sneaker);
+    customerRepo.save(customer);
+    return customer;
+  }
+
+  public Set<Sneaker> getWantedSneakersOfCustomer(long id) {
+    Customer customer = customerRepo.findById(id).orElseThrow(() -> new GenericException(HttpStatus.NOT_FOUND, "customer not found", 404));
+
+    return customer.getSneakerWishlist();
+  }
   public void deleteAllCustomers() {
     customerRepo.deleteAll();
   }

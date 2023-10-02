@@ -29,7 +29,7 @@ public class Customer {
                   CascadeType.REMOVE
   })
   @JoinTable(
-          name = "customer_sneakers",
+          name = "customer_ownedSneakers",
           joinColumns = {
                   @JoinColumn(name = "customer-id", referencedColumnName = "customerId")
           },
@@ -37,5 +37,22 @@ public class Customer {
                   @JoinColumn(name = "sneaker-id", referencedColumnName = "sneakerId")
           }
   )
-  Set<Sneaker> sneakers = new HashSet<>();
+  Set<Sneaker> ownedSneakers = new HashSet<>();
+
+  @ManyToMany(fetch = FetchType.EAGER,
+          cascade = {
+                  CascadeType.PERSIST,
+                  CascadeType.MERGE,
+                  CascadeType.REMOVE
+          })
+  @JoinTable(
+          name = "customer_sneakerWishlist",
+          joinColumns = {
+                  @JoinColumn(name = "customer-id", referencedColumnName = "customerId")
+          },
+          inverseJoinColumns = {
+                  @JoinColumn(name = "sneaker-id", referencedColumnName = "sneakerId")
+          }
+  )
+  Set<Sneaker> sneakerWishlist = new HashSet<>();
 }

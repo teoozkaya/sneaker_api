@@ -3,6 +3,7 @@ package com.example.sneakers.service;
 import com.example.sneakers.entity.Customer;
 import com.example.sneakers.entity.Sneaker;
 import com.example.sneakers.enums.Brand;
+import com.example.sneakers.enums.Model;
 import com.example.sneakers.exceptions.GenericException;
 import com.example.sneakers.repository.SneakerRepo;
 import com.example.sneakers.request.SneakerRequest;
@@ -31,10 +32,15 @@ public class SneakerService {
     Sneaker sneaker = Sneaker.builder().
             brand(sneakerRequest.getBrand()).
             name(sneakerRequest.getName()).
+            model(sneakerRequest.getModel()).
             releaseYear(sneakerRequest.getReleaseYear()).
             build();
+    if (sneaker.getModel().correctModel(sneaker)) {
     sneakerRepo.save(sneaker);
     return sneaker;
+    } else {
+      throw new GenericException(HttpStatus.NOT_FOUND, "model is not found", 404);
+    }
   }
 
   public List<Sneaker> getSneakersByBrand(Brand brand) {

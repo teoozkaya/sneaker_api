@@ -54,20 +54,12 @@ public class SecurityConfig {
                     .requestMatchers("/api/auth/login",
                             "/api/sneakers",
                             "/api/sneakers/brand",
+                            "/swagger-ui/**",
+                            "/v3/api-docs/**",
+                            "/swagger-resources/**",
                             "/api/customers/create").permitAll()
                     .anyRequest().authenticated()
-            )/*
-            .authorizeHttpRequests(auth -> auth
-                    .requestMatchers("/api/users").hasAnyAuthority("ROLE_CUSTOMER_OWNER", "ROLE_ADMIN")
-                    .requestMatchers("/api/auth/login",
-                            "/api/auth/**",
-                            "/v3/api-docs.yaml",
-                            "/v3/api-docs/**",
-                            "/swagger-ui/**",
-                            "/swagger-ui.html"
-                    ).permitAll()
-                    .anyRequest().authenticated()
-                    */
+            )
             .formLogin(AbstractHttpConfigurer::disable)
             .httpBasic(AbstractHttpConfigurer::disable)
             .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

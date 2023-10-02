@@ -1,6 +1,7 @@
 package com.example.sneakers.entity;
 
 import com.example.sneakers.enums.Brand;
+import com.example.sneakers.enums.Model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
@@ -23,6 +24,7 @@ public class Sneaker {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private int sneakerId;
   Brand brand;
+  Model model;
   String name;
   int releaseYear;
 
@@ -32,6 +34,15 @@ public class Sneaker {
                   CascadeType.PERSIST,
                   CascadeType.MERGE,
                   CascadeType.REMOVE
-          }, mappedBy = "sneakers")
-  Set<Customer> customers = new HashSet<>();
+          }, mappedBy = "sneakerWishlist")
+  Set<Customer> wantingCustomers = new HashSet<>();
+
+  @JsonIgnore
+  @ManyToMany(fetch = FetchType.EAGER,
+          cascade = {
+                  CascadeType.PERSIST,
+                  CascadeType.MERGE,
+                  CascadeType.REMOVE
+          }, mappedBy = "ownedSneakers")
+  Set<Customer> ownerCustomers = new HashSet<>();
 }
