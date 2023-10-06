@@ -26,7 +26,9 @@ public class Sneaker {
   Brand brand;
   Model model;
   String name;
+  int price;
   int releaseYear;
+  String fullName;
 
   @JsonIgnore
   @ManyToMany(fetch = FetchType.EAGER,

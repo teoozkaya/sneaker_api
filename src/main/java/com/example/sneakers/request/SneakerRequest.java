@@ -20,6 +20,7 @@ public class SneakerRequest {
   String name;
   Brand brand;
   Model model;
+  int price;
   int releaseYear;
 
 }

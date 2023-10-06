@@ -3,6 +3,7 @@ package com.example.sneakers.controller;
 import com.example.sneakers.entity.Customer;
 import com.example.sneakers.entity.Sneaker;
 import com.example.sneakers.enums.Brand;
+import com.example.sneakers.enums.Model;
 import com.example.sneakers.request.CustomerRequest;
 import com.example.sneakers.request.SneakerRequest;
 import com.example.sneakers.service.SneakerService;
@@ -50,6 +51,22 @@ public class SneakerController {
     return ResponseEntity.status(HttpStatus.OK).body(sneakerService.getSneakersByBrand(brand));
   }
 
+  @Operation(summary = "Get sneaker by model",
+          description = "This endpoint retrieves the sneaker from the model.")
+  @ApiResponse(responseCode = "200", description = "Model found and sneakers are retrieved")
+  @GetMapping("/sneakers/model/{model}")
+  public ResponseEntity<List<Sneaker>> getSneakersByModel(@PathVariable("model") Model model) {
+    return ResponseEntity.status(HttpStatus.OK).body(sneakerService.getSneakersByModel(model));
+  }
+
+
+  @Operation(summary = "Get all sneakers by release year descending",
+          description = "This endpoint retrieves the sneakers by release year descending.")
+  @ApiResponse(responseCode = "200", description = "Sneakers are retrieved")
+  @GetMapping("/sneakers/getAll/releaseYear/desc")
+  public ResponseEntity<List<Sneaker>> getSneakersByReleaseYearDesc() {
+    return ResponseEntity.status(HttpStatus.OK).body(sneakerService.getSneakersByRelaseYearDesc());
+  }
   @Operation(summary = "Create sneaker",
           description = "This endpoint allows you to create a new sneaker.")
   @ApiResponse(responseCode = "201", description = "Sneaker created")
@@ -82,5 +99,13 @@ public class SneakerController {
   public ResponseEntity<Object> deleteSneakerById(@PathVariable("id") long id) {
     sneakerService.deleteSneakerById(id);
     return ResponseEntity.ok().build();
+  }
+
+  @Operation(summary = "Search sneaker",
+          description = "This endpoint searches sneaker.")
+  @ApiResponse(responseCode = "200", description = "Sneaker found")
+  @GetMapping("/sneakers/search/{name}")
+  public ResponseEntity<List<Sneaker>> searchSneaker(@PathVariable("name") String name) {
+    return ResponseEntity.status(HttpStatus.OK).body(sneakerService.search(name));
   }
 }

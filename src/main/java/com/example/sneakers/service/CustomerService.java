@@ -62,6 +62,20 @@ public class CustomerService {
     return customer;
   }
 
+  public Customer deleteSneakerFromOwnedList(long customerId, long sneakerId) {
+    Customer customer = customerRepo.findById(customerId)
+            .orElseThrow(() -> new GenericException(HttpStatus.NOT_FOUND, "customer not found", 404));
+
+    Sneaker sneaker = sneakerService.getById(sneakerId);
+    if (customer.getOwnedSneakers().contains(sneaker)) {
+      customer.getOwnedSneakers().remove(sneaker);
+    } else {
+      throw new GenericException(HttpStatus.NOT_FOUND, "sneaker not found", 404);
+    }
+    customerRepo.save(customer);
+    return customer;
+  }
+
   public Set<Sneaker> getOwnedSneakersOfCustomer(long id) {
     Customer customer = customerRepo.findById(id).orElseThrow(() -> new GenericException(HttpStatus.NOT_FOUND, "customer not found", 404));
 
@@ -83,6 +97,20 @@ public class CustomerService {
     Customer customer = customerRepo.findById(id).orElseThrow(() -> new GenericException(HttpStatus.NOT_FOUND, "customer not found", 404));
 
     return customer.getSneakerWishlist();
+  }
+
+  public Customer deleteSneakerFromWishlist(long customerId, long sneakerId) {
+    Customer customer = customerRepo.findById(customerId)
+            .orElseThrow(() -> new GenericException(HttpStatus.NOT_FOUND, "customer not found", 404));
+
+    Sneaker sneaker = sneakerService.getById(sneakerId);
+    if (customer.getSneakerWishlist().contains(sneaker)) {
+      customer.getSneakerWishlist().remove(sneaker);
+    } else {
+      throw new GenericException(HttpStatus.NOT_FOUND, "sneaker not found", 404);
+    }
+    customerRepo.save(customer);
+    return customer;
   }
   public void deleteAllCustomers() {
     customerRepo.deleteAll();

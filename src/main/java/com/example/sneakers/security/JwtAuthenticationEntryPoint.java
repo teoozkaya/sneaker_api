@@ -17,7 +17,7 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
     response.setContentType("application/json");
     response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 
-    String errorMessage = "you have to login to access here"; // Kendi hata mesajınızı buraya yazın
+    String errorMessage = "you have to login to access here";
 
     String jsonErrorMessage = "{\"error\": \"" + errorMessage + "\"}";
     response.getWriter().write(jsonErrorMessage);
