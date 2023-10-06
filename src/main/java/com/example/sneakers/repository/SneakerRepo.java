@@ -17,6 +17,8 @@ public interface SneakerRepo extends JpaRepository<Sneaker, Long> {
 
   Optional<List<Sneaker>> findSneakersByModel(Model model);
 
-  //List<Sneaker> findAllByOrderByReleaseYearDesc();
+  List<Sneaker> findAllByOrderByReleaseYearDesc();
+
+  List<Sneaker> findByFullNameContainingIgnoreCase(String title);
 
 }

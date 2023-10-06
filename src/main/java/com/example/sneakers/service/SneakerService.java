@@ -49,8 +49,7 @@ public class SneakerService {
   }
 
   public List<Sneaker> getSneakersByRelaseYearDesc() {
-    return null;
-    //sneakerRepo.findAllByOrderByReleaseYearDesc();
+    return sneakerRepo.findAllByOrderByReleaseYearDesc();
   }
 
   public List<Sneaker> getSneakersByModel(Model model) {
@@ -80,7 +79,7 @@ public class SneakerService {
   }
 
   public List<Sneaker> search(String name) {
-    return null;
+    return sneakerRepo.findByFullNameContainingIgnoreCase(name);
   }
 
   public String createFullName(Brand brand, Model model, String name) {
