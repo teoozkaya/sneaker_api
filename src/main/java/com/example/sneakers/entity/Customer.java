@@ -21,6 +21,7 @@ public class Customer {
   String surname;
   String username;
   String password;
+  String mail;
 
   @ManyToMany(fetch = FetchType.EAGER,
           cascade = {
@@ -31,10 +32,10 @@ public class Customer {
   @JoinTable(
           name = "customer_ownedSneakers",
           joinColumns = {
-                  @JoinColumn(name = "customer-id", referencedColumnName = "customerId")
+                  @JoinColumn(name = "customerId", referencedColumnName = "customerId")
           },
           inverseJoinColumns = {
-                  @JoinColumn(name = "sneaker-id", referencedColumnName = "sneakerId")
+                  @JoinColumn(name = "sneakerId", referencedColumnName = "sneakerId")
           }
   )
   Set<Sneaker> ownedSneakers = new HashSet<>();

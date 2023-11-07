@@ -1,0 +1,1 @@
+INSERT INTO customer (customer_id, name, password, surname, username, mail) VALUES (1, 'AAA', 'AAA', 'AAA', 'AAA', 'a@gmail.com');

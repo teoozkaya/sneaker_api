@@ -1,0 +1,1 @@
+INSERT INTO sneaker (sneaker_id, brand, name, release_year, model, full_name, price) VALUES (1, 0, 'Gulf', 2020, 40, 'Nike Dunk Gulf', 400);

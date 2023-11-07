@@ -34,6 +34,7 @@ public class CustomerService {
             .surname(customerRequest.getSurname())
             .username(customerRequest.getUsername())
             .password(customerRequest.getPassword())
+            .mail(customerRequest.getMail())
             .build();
     customerRepo.save(customer);
     return customer;
@@ -47,6 +48,8 @@ public class CustomerService {
     customer.setSurname(customerRequest.getSurname());
     customer.setUsername(customerRequest.getUsername());
     customer.setPassword(customerRequest.getPassword());
+    customer.setMail(customerRequest.getMail());
+
     customerRepo.save(customer);
     return customer;
   }

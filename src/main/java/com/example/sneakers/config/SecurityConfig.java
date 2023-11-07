@@ -56,8 +56,9 @@ public class SecurityConfig {
                             "/api/sneakers/brand",
                             "/swagger-ui/**",
                             "/v3/api-docs/**",
-                            "/swagger-resources/**",
-                            "/api/customers/create").permitAll()
+                            "/api/users",
+                            "/api/customers",
+                            "/swagger-resources/**").permitAll()
                     .anyRequest().authenticated()
             )
             .formLogin(AbstractHttpConfigurer::disable)

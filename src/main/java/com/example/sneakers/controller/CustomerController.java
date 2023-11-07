@@ -7,6 +7,7 @@ import com.example.sneakers.service.CustomerService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,7 +44,7 @@ public class CustomerController {
           description = "This endpoint allows you to create a new customer .")
   @ApiResponse(responseCode = "201", description = "Customer created")
   @PostMapping("/customers/create")
-  public ResponseEntity<Customer> createCustomer(@RequestBody CustomerRequest customerRequest) {
+  public ResponseEntity<Customer> createCustomer(@Valid @RequestBody CustomerRequest customerRequest) {
     return ResponseEntity.status(HttpStatus.CREATED).body(customerService.createCustomer(customerRequest));
   }
 
@@ -51,7 +52,7 @@ public class CustomerController {
           description = "This endpoint allows you to update a customer's information by their ID.")
   @ApiResponse(responseCode = "200", description = "Customer updated successfully")
   @PutMapping("/customers/{id}/update")
-  public ResponseEntity<Customer> updateCustomerById(@PathVariable("id") long id, @RequestBody CustomerRequest customerRequest) {
+  public ResponseEntity<Customer> updateCustomerById(@Valid @PathVariable("id") long id, @RequestBody CustomerRequest customerRequest) {
     return ResponseEntity.status(HttpStatus.OK).body(customerService.updateCustomerByID(id, customerRequest));
   }
 
